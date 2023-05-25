@@ -12,7 +12,7 @@ const initialState: CommentsState = {
   isLoading: false,
 };
 
-export const postsSlice = createSlice({
+export const commentsSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {
@@ -29,6 +29,6 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { getCommentsFetch, getCommentsSuccess, getCommentsFailed } = postsSlice.actions;
+export const { getCommentsFetch, getCommentsSuccess, getCommentsFailed } = commentsSlice.actions;
 
-export default postsSlice.reducer;
+export default commentsSlice.reducer;

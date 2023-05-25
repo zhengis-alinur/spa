@@ -4,7 +4,7 @@ import type { CommentEntity } from '../../types';
 
 const Comment = ({body, id, email}: Partial<CommentEntity>) => {
     return (
-    <Card>
+    <Card border="light">
       <Card.Body>
         <blockquote className="blockquote mb-0">
           <footer className="blockquote-footer">

@@ -1,11 +1,12 @@
 import React, {useEffect, useState } from 'react';
-import {Button, Card, Collapse, Spinner, Stack} from 'react-bootstrap'
+import {Button, Card, Collapse, Image, Spinner, Stack} from 'react-bootstrap'
 
 import type { PostEntity, CommentEntity } from '../../types';
 import { selectCommentsByPostId } from '../../selectors';
 import { getCommentsFetch } from '../../app/reducers/commentsState';
 import Comment from '../Comment';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { Link } from 'react-router-dom';
 
 const Post = ({title, userId, body, id: postId}: PostEntity) => {
     const dispatch = useAppDispatch();
@@ -28,13 +29,22 @@ const Post = ({title, userId, body, id: postId}: PostEntity) => {
         setShow(!show);
     }
     return (
-        <Card style={{ width: '100$' }}>
-            <Card.Header>User #{userId}</Card.Header>
+        <Card style={{ width: '100%' }}>
+            <Card.Header>
+                <Stack direction='horizontal' gap={2}>
+                    <Link to={`/user/${userId}`}>
+                        <Image src='avatar.svg' style={{maxWidth: '50px'}}/>
+                    </Link>
+                    <p>
+                        User #{userId}
+                    </p>
+                </Stack>
+            </Card.Header>
             <Card.Body>
                 <Stack gap={3}>
                     <Card.Title>{title}</Card.Title>
                     <Card.Text>{body}</Card.Text>
-                    <Button onClick={handleCommentButtonClick} >comments</Button>
+                    <Button onClick={handleCommentButtonClick} variant='dark'>Show comments</Button>
                     <Collapse in={show}>
                         <div>
                             {
