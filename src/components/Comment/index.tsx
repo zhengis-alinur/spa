@@ -1,12 +1,22 @@
 
+import { Card } from 'react-bootstrap';
 import type { CommentEntity } from '../../types';
 
 const Comment = ({body, id, email}: Partial<CommentEntity>) => {
     return (
-    <div key={id}>
-        <p>{email}</p>
-        <p>{body}</p>
-    </div>
+    <Card>
+      <Card.Body>
+        <blockquote className="blockquote mb-0">
+          <footer className="blockquote-footer">
+            {email}
+          </footer>
+          <p>
+            {' '}
+            {body}{' '}
+          </p>
+        </blockquote>
+      </Card.Body>
+    </Card>
     )
 }
 
