@@ -6,6 +6,8 @@ import { selectPostsIsLoading, selectPosts } from '../../selectors';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import NavBar from '../../components/NavBar';
+import CustomSpinner from '../../components/Spinner';
+import Posts from '../../components/Posts';
 
 function PostsPage() {
     const posts = useAppSelector<PostEntity[]>(selectPosts);
@@ -19,17 +21,7 @@ function PostsPage() {
     }, [])
     return <Container fluid style={{padding: 0}}>
         <NavBar/>
-        {isLoading ? 
-            <Spinner animation="border" role="status" style={{marginTop: '100px'}}>
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-            :
-            posts.map((post) => (
-                <Row style={{width: '50%', margin: '30px auto'}}>
-                    <Post {...post} key={post.id}/>
-                </Row>
-            ))
-        }
+        <Posts isLoading={isLoading} posts={posts} />
         </Container>
     
 }

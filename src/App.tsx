@@ -8,6 +8,7 @@ import {
 import PostsPage from './pages/Posts';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import UserPage from './pages/User';
+import AboutPage from './pages/About';
 
 export default function App() {
   const router = createBrowserRouter([
@@ -18,20 +19,7 @@ export default function App() {
     {
       path: "/about",
       element: 
-      <div>
-          <h1>contacts</h1>
-        <ul>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/">posts</Link>
-          </li>
-          <li>
-            <Link to="/user">contacts</Link>
-          </li>
-        </ul>
-      </div>
+      <AboutPage/>
     },
     {
       path: "/user/:userId",

@@ -10,11 +10,12 @@ export const getPosts = async (): Promise<GetPostResponse> => {
     return await fetch('https://jsonplaceholder.typicode.com/posts').then((response) => response.json());
 }
 
+export const getPostsById = async (userId: GetUserPayload): Promise<GetPostResponse> => {
+    return await fetch(`https://jsonplaceholder.typicode.com/users/${userId}/posts`).then((response) => response.json());
+}
+
 export const getUser = async (userId: GetUserPayload): Promise<GetPostResponse> => {
-    return await fetch(`https://jsonplaceholder.typicode.com/users/`).then((response) => response.json())
-    .then((users) => {
-        return users.filter(({id}: {id: UserId}) => id === Number(userId))[0];
-    });
+    return await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`).then((response) => response.json())
 }
 
 

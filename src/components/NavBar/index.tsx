@@ -1,9 +1,9 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { selectUser } from "../../selectors";
 import { UserEntity } from "../../types";
-
+import './styles.css';
 const NavBar = () => {
     const user = useAppSelector<UserEntity>(selectUser);
     const navigate = useNavigate();
@@ -14,16 +14,26 @@ const NavBar = () => {
     }
 
     return (
-        <Navbar bg="secondary" variant="dark">
-            <Container>
-                <Navbar.Brand href="/">Navbar</Navbar.Brand>
-                <Nav className="me-auto">
-                    <Nav.Link onClick={(e) => handleNavigate(e, '/')}>Posts</Nav.Link>
-                    <Nav.Link onClick={(e) => handleNavigate(e, `/about`)}>About</Nav.Link>
-                    <Nav.Link onClick={(e) => handleNavigate(e, `/user/${user.id}`)}>User</Nav.Link>
-                </Nav>
-            </Container>
-        </Navbar>
+    <Navbar variant="dark" bg="dark" expand="lg" style={{marginBottom: '30px'}}>
+        <Container fluid>
+            <Navbar.Brand onClick={(e) => handleNavigate(e, '/')}>React-Bootstrap</Navbar.Brand>
+            <Navbar.Toggle aria-controls="navbar-dark-example" />
+            <Navbar.Collapse id="navbar-dark-example">
+            <Nav>
+                <NavDropdown
+                    id="nav-dropdown-dark-example"
+                    title="☰"
+                    menuVariant="dark"
+                    style={{fontSize: '40px'}}
+                >
+                    <NavDropdown.Item onClick={(e) => handleNavigate(e, `/`)}>Posts</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={(e) => handleNavigate(e, `/about`)}>About</NavDropdown.Item>
+                </NavDropdown>
+            </Nav>
+            </Navbar.Collapse>
+        </Container>
+    </Navbar>
     )
 }
 export default NavBar;

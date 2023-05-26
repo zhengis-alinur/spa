@@ -1,10 +1,14 @@
 
 import { createSlice } from '@reduxjs/toolkit';
-import { UserEntity } from '../../types';
+import { PostEntity, UserEntity } from '../../types';
 
 export type UserState = {
   info: UserEntity;
   isLoading: boolean;
+  posts: {
+    isLoading: boolean,
+    value: PostEntity[],
+  };
 }
 
 const initialState: UserState = {
@@ -32,6 +36,10 @@ const initialState: UserState = {
     }
   },
   isLoading: false,
+  posts: {
+    isLoading: false,
+    value: []
+  },
 };
 
 export const userSlice = createSlice({
@@ -47,10 +55,27 @@ export const userSlice = createSlice({
     },
     getUserFailed: (state) => {
         state.isLoading = false;
-    }
+    },
+    getPostsByIdFetch: (state, action) => {
+      state.posts.isLoading = true;
+    },
+    getPostsByIdSuccess: (state, {payload}) => {
+        state.posts.value = payload;
+        state.posts.isLoading = false;
+    },
+    getPostsByIdFailed: (state) => {
+        state.posts.isLoading = false;
+    },
   },
 });
 
-export const { getUserFetch, getUserSuccess, getUserFailed } = userSlice.actions;
+export const { 
+  getUserFetch,
+  getUserSuccess,
+  getUserFailed,
+  getPostsByIdFetch,
+  getPostsByIdSuccess,
+  getPostsByIdFailed
+} = userSlice.actions;
 
 export default userSlice.reducer;

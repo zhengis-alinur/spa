@@ -29,11 +29,11 @@ const Post = ({title, userId, body, id: postId}: PostEntity) => {
         setShow(!show);
     }
     return (
-        <Card style={{ width: '100%' }}>
+        <Card style={{ width: '100%', padding: '0'}}>
             <Card.Header>
                 <Stack direction='horizontal' gap={2}>
                     <Link to={`/user/${userId}`}>
-                        <Image src='avatar.svg' style={{maxWidth: '50px'}}/>
+                        <Image src={process.env.PUBLIC_URL + '/avatar.svg'} style={{maxWidth: '50px'}}/>
                     </Link>
                     <p>
                         User #{userId}
@@ -41,10 +41,10 @@ const Post = ({title, userId, body, id: postId}: PostEntity) => {
                 </Stack>
             </Card.Header>
             <Card.Body>
-                <Stack gap={3}>
+                <Stack gap={3} style={{alignItems: 'center'}}>
                     <Card.Title>{title}</Card.Title>
                     <Card.Text>{body}</Card.Text>
-                    <Button onClick={handleCommentButtonClick} variant='dark'>Show comments</Button>
+                    <Button onClick={handleCommentButtonClick} variant='dark' style={{maxWidth: '50%'}}>Show comments</Button>
                     <Collapse in={show}>
                         <div>
                             {

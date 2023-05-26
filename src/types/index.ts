@@ -5,7 +5,7 @@ export type CommentId = string;
 export type PostEntity = {
     id: PostId,
     title: string,
-    userId: string,
+    userId: UserId,
     body: string
 }
 
