@@ -8,7 +8,7 @@ import { wait } from '../../utils';
 
 function* workGetCommentsFetch({payload: {postId}}:PayloadAction<{postId: PostId}>){
     const comments: SagaReturnType<typeof getComments> = yield call(getComments, postId);
-    yield wait(1000);
+    yield wait(500);
     yield put(getCommentsSuccess({postId, comments}));
 }
 

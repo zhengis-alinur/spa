@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react';
+import {useEffect } from 'react';
 import {Card, Image, Stack} from 'react-bootstrap'
 
 import type { PostEntity, UserEntity } from '../../types';
@@ -7,14 +7,18 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Posts from '../Posts';
 import { getPostsByIdFetch } from '../../app/reducers/userState';
 
-const UserCard = ({id, name, username, email, address, phone, website, company}: UserEntity) => {
+type Props = UserEntity & {
+    aboutMe?: string;
+}
+
+const UserCard = ({id, name, username, email, address, phone, website, company, aboutMe}: Props) => {
     const posts = useAppSelector<PostEntity[]>((state) => selectPostsByUserId(state, id));
     const isLoading = useAppSelector<boolean>(state => selectUserPostsIsLoading(state));
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(getPostsByIdFetch(id))
-    }, [])
+    }, [dispatch, id])
 
     return (
         <Card style={{ width: '90%', margin: '0 auto', padding: '25px'}}>
@@ -34,13 +38,17 @@ const UserCard = ({id, name, username, email, address, phone, website, company}:
                     <Card.Text>Phone: {phone}</Card.Text>
                     <Card.Text>Website: {website}</Card.Text>
                     <Card.Text>Company: {company.name}</Card.Text>
-                    {
-                        posts.length > 0 &&
+                    {aboutMe && <>
+                        <h3>About me</h3>
+                        <Card.Text>{aboutMe}</Card.Text>
+                    </>}
+                    { !aboutMe && 
                         <>
                             <h3>Here are my posts:</h3>
                             <Posts width='100%' isLoading={isLoading} posts={posts} />
                         </>
                     }
+                    
                 </Stack>
             </Card.Body>
         </Card>

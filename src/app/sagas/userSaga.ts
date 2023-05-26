@@ -1,7 +1,7 @@
 import {call, put, takeLatest, SagaReturnType} from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { GetPostResponse, getPostsById, getUser } from '../../resource';
+import { getPostsById, getUser } from '../../resource';
 import { UserId } from '../../types';
 import { wait } from '../../utils';
 import { getPostsByIdSuccess, getUserSuccess } from '../reducers/userState';

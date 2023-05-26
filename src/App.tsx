@@ -3,10 +3,8 @@ import './App.css';
 import {
   createBrowserRouter,
   RouterProvider,
-  Link
 } from "react-router-dom";
 import PostsPage from './pages/Posts';
-import { Navbar, Container, Nav } from 'react-bootstrap';
 import UserPage from './pages/User';
 import AboutPage from './pages/About';
 

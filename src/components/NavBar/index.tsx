@@ -1,11 +1,7 @@
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
-import { selectUser } from "../../selectors";
-import { UserEntity } from "../../types";
 import './styles.css';
 const NavBar = () => {
-    const user = useAppSelector<UserEntity>(selectUser);
     const navigate = useNavigate();
 
     const handleNavigate = (e: React.MouseEvent, link: string) => {

@@ -19,6 +19,9 @@ export const postsSlice = createSlice({
     getPostsFetch: (state) => {
         state.isLoading = true;
     },
+    getPostsQueryFetch: (state, action) => {
+      state.isLoading = true;
+  },
     getPostsSuccess: (state, action) => {
         state.posts = action.payload
         state.isLoading = false;
@@ -29,6 +32,6 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { getPostsFetch, getPostsSuccess, getPostsFailed } = postsSlice.actions;
+export const { getPostsFetch, getPostsQueryFetch, getPostsSuccess, getPostsFailed } = postsSlice.actions;
 
 export default postsSlice.reducer;
