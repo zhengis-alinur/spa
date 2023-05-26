@@ -1,34 +1,63 @@
-import { useEffect, useRef } from 'react';
-import { getPostsFetch, getPostsQueryFetch } from '../../app/reducers/postsState';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef, useState } from 'react';
+import { getPostsQueryFetch, getPostsTotalPages } from '../../app/reducers/postsState';
 import type { PostEntity } from '../../types';
 import { selectPostsIsLoading, selectPosts } from '../../selectors';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { Button, Container, Form, InputGroup } from 'react-bootstrap';
+import { Button, Container, Form, InputGroup, Nav, Pagination, Stack } from 'react-bootstrap';
 import NavBar from '../../components/NavBar';
 import Posts from '../../components/Posts';
 
 function PostsPage() {
+    const dispatch = useAppDispatch();
     const inputRef = useRef<HTMLInputElement>(null);
     const posts = useAppSelector<PostEntity[]>(selectPosts);
     const isLoading = useAppSelector<boolean>(state => selectPostsIsLoading(state));
-    const dispatch = useAppDispatch();
+    
+    const [active, setActive] = useState(1);
+    const pages = useAppSelector<number>(state => state.post.totalPages);
+    const paginationItems = [];
+
+    const [asc, setAsc] = useState(true);
+
+    const toggleOrder = () => {
+        setAsc(!asc);
+    }
+
+    const resetPosts = () => {
+        dispatch(getPostsTotalPages({query: {
+            filter: inputRef.current && inputRef.current.value,
+        }}));
+        dispatch(getPostsQueryFetch({query: {
+            filter: inputRef.current && inputRef.current.value,
+            page: active,
+        }}));
+    }
+
+    useEffect(() => {
+        resetPosts();
+    }, [active])
+
+    for(let i = 1; i <= pages; i++) {
+        paginationItems.push(
+            <Pagination.Item key={i} active={i === active} onClick={() => setActive(i)}>
+              {i}
+            </Pagination.Item>,
+          );
+    }
 
     const onClear = () => {
         if(inputRef.current) {
             inputRef.current.value = '';
+            resetPosts();
         }
     }
 
     const handleSearchChange = () => {
-        dispatch(getPostsQueryFetch({query: inputRef.current && inputRef.current.value}));
+        setActive(1);
+        resetPosts();
     }
     
-    useEffect(() => {
-        if(posts.length === 0) {
-            dispatch(getPostsFetch())
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
     return <Container fluid style={{padding: 0}}>
         <NavBar/>
         <InputGroup className="mb-3" style={{width: '70%', margin: '0 auto'}}>
@@ -43,7 +72,22 @@ function PostsPage() {
                 ✕
             </Button>
         </InputGroup>
-        <Posts isLoading={isLoading} posts={posts} />
+        {
+            posts.length === 0 && !isLoading ?
+            <h1>Not found</h1> :
+            <Stack direction='horizontal' style={{width: '70%', margin: '0 auto', justifyContent: 'space-between'}}>
+                <Pagination >{paginationItems}</Pagination>
+                <Nav>
+                    <Nav.Item>
+                        <Button onClick={toggleOrder} variant={!asc ? 'light' : 'primary'}>asc</Button>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Button onClick={toggleOrder} variant={asc ? 'light' : 'primary'}>DESC</Button>
+                    </Nav.Item>
+                </Nav>
+            </Stack>
+        }
+        <Posts isLoading={isLoading} posts={posts} /> 
         </Container>
     
 }

@@ -26,6 +26,10 @@ const NavBar = () => {
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={(e) => handleNavigate(e, `/about`)}>About</NavDropdown.Item>
                 </NavDropdown>
+                <Nav.Link onClick={(e) => {
+                    e.preventDefault(); 
+                    navigate('/');
+                }}>Back</Nav.Link>
             </Nav>
             </Navbar.Collapse>
         </Container>
